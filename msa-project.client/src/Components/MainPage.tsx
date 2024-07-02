@@ -1,11 +1,11 @@
-import { Container, Text, Button, Group } from '@mantine/core';
+import { Text, Button } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './MainPage.module.css';
 
 function MainPage() {
     return (
         <div className={classes.wrapper}>
-            <Container size={700} className={classes.inner}>
+            <div className={classes.inner}>
                 <h1 className={classes.title}>
                     <Text component="span" variant="gradient" gradient={{ from: '#009688', to: '#004d40' }} inherit>
                         OrganisEasy
@@ -16,36 +16,33 @@ function MainPage() {
                         Organise, Track, and Achieve
                     </Text>
                 </h2>
+                <h3 className={classes.description}>
+                    <Text color="dimmed" className={classes.description}>
+                        OrganisEasy is your all-in-one productivity companion designed to simplify and enhance your daily
+                        routine. With OrganisEasy, you can effortlessly manage and track your habits, stay focused with a
+                        built-in Pomodoro timer, and organize your tasks with comprehensive lists.
+                    </Text>
+                </h3>
+                <Button
+                    size="xl"
+                    className={classes.control}
+                    variant="gradient"
+                    gradient={{ from: 'blue', to: 'cyan' }}
+                >
+                    Get started
+                </Button>
 
-                <h2>
-                    Your All-in-One Productivity Partner
-                </h2>
-
-                <Text className={classes.description} color="dimmed">
-                    OrganisEasy is your all-in-one productivity companion designed to simplify and enhance your daily
-                    routine. With OrganisEasy, you can effortlessly manage and track your habits, stay focused with a
-                    built-in Pomodoro timer, and organize your tasks with comprehensive lists.
-                </Text>
-                    <Button
-                        size="xl"
-                        className={classes.control}
-                        variant="gradient"
-                        gradient={{ from: 'blue', to: 'cyan' }}
-                    >
-                        Get started
-                    </Button>
-
-                    <Button
-                        component="a"
-                        href="https://github.com/WizVader/msa-phase-2"
-                        size="xl"
-                        variant="default"
-                        className={classes.control}
-                        leftSection={<GithubIcon size={20} />}
-                    >
-                        GitHub
-                    </Button>
-            </Container>
+                <Button
+                    component="a"
+                    href="https://github.com/WizVader/msa-phase-2"
+                    size="xl"
+                    variant="default"
+                    className={classes.control}
+                    leftSection={<GithubIcon size={20} />}
+                >
+                    GitHub
+                </Button>
+            </div>
         </div>
     );
 }

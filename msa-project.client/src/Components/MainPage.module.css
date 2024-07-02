@@ -1,25 +1,27 @@
 .wrapper {
-    position: relative;
+    position: absolute; /* Positioning absolute to center the content */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Offset by half of its own width and height */
+    width: 100%; /* Full width of the viewport */
+    height: 100vh; /* Full viewport height */
     background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
+    display: flex; /* Flexbox to center inner content */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
 }
 
 .inner {
-    position: relative;
-    padding-top: rem(200px);
-    padding-bottom: rem(120px);
-
-    @media (max-width: $mantine-breakpoint-sm) {
-        padding-bottom: rem(80px);
-        padding-top: rem(80px);
-    }
+    text-align: center; /* Center text */
+    padding: rem(20px); /* Add padding for spacing */
 }
 
 .title {
     font-family: Greycliff CF, var(--mantine-font-family);
-    font-size: rem(62px);
-    font-weight: 900;
+    font-size: rem(78px);
+    font-weight: 1500;
     line-height: 1.1;
-    margin: 10px;
+    margin: 25px;
     padding: 0;
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
     white-space: nowrap; /* Prevents text from wrapping */
@@ -35,7 +37,7 @@
     font-size: rem(48px);
     font-weight: 900;
     line-height: 1.1;
-    margin: 0;
+    margin: 25px;
     padding: 0;
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
     white-space: nowrap; /* Prevents text from wrapping */
@@ -47,18 +49,17 @@
 }
 
 .description {
-    margin-top: var(--mantine-spacing-xl);
-    font-size: rem(24px);
-
+    margin: 35px;
+    font-size: rem(42px);
+    
     @media (max-width: $mantine-breakpoint-sm) {
         font-size: rem(18px);
     }
 }
 
-
 .control {
     height: rem(54px);
-    margin: rem(30px);
+    margin: rem(10px); /* Adjust margin as needed */
     padding-left: rem(38px);
     padding-right: rem(38px);
 
@@ -69,3 +70,8 @@
         flex: 1;
     }
 }
+
+    .control:hover {
+        transform: scale(1.05); /* Slightly enlarges the button */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a shadow effect */
+    }
