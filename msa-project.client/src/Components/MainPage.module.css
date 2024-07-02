@@ -1,24 +1,57 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
 .wrapper {
-    position: absolute; /* Positioning absolute to center the content */
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Offset by half of its own width and height */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
     width: 100%; /* Full width of the viewport */
     height: 100vh; /* Full viewport height */
     background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
-    display: flex; /* Flexbox to center inner content */
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
+}
+
+.row {
+    display: flex; /* Flexbox for layout */
+    width: 100%;
+    height: 100%;
+}
+
+.left {
+    display: flex;
+    flex-direction: column; /* Ensure the children stack vertically */
+    justify-content: center; /* Center children vertically */
+    align-items: center; /* Center children horizontally */
+    flex: 1; /* Take up available space */
+    padding: 10px;
+    background-color: var(--mantine-color-light-2); /* Optional background color */
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center children vertically */
+    align-items: center; /* Center children horizontally */
+    flex: 3; /* Take up three times the space of left */
+    padding: 10px;
+    background-color: var(--mantine-color-light-3); /* Optional background color */
 }
 
 .inner {
     text-align: center; /* Center text */
-    padding: rem(20px); /* Add padding for spacing */
+    padding: 20px; /* Add padding for spacing */
 }
 
 .title {
     font-family: Greycliff CF, var(--mantine-font-family);
-    font-size: rem(78px);
+    font-size: 78px;
     font-weight: 1500;
     line-height: 1.1;
     margin: 25px;
@@ -26,15 +59,15 @@
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
     white-space: nowrap; /* Prevents text from wrapping */
 
-    @media (max-width: $mantine-breakpoint-sm) {
-        font-size: rem(42px);
+    @media (max-width: 768px) {
+        font-size: 42px;
         line-height: 1.2;
     }
 }
 
 .body {
     font-family: Greycliff CF, var(--mantine-font-family);
-    font-size: rem(48px);
+    font-size: 48px;
     font-weight: 900;
     line-height: 1.1;
     margin: 25px;
@@ -42,31 +75,31 @@
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
     white-space: nowrap; /* Prevents text from wrapping */
 
-    @media (max-width: $mantine-breakpoint-sm) {
-        font-size: rem(42px);
+    @media (max-width: 768px) {
+        font-size: 42px;
         line-height: 1.2;
     }
 }
 
 .description {
     margin: 35px;
-    font-size: rem(42px);
-    
-    @media (max-width: $mantine-breakpoint-sm) {
-        font-size: rem(18px);
+    font-size: 42px;
+
+    @media (max-width: 768px) {
+        font-size: 18px;
     }
 }
 
 .control {
-    height: rem(54px);
-    margin: rem(10px); /* Adjust margin as needed */
-    padding-left: rem(38px);
-    padding-right: rem(38px);
+    height: 54px;
+    margin: 10px; /* Adjust margin as needed */
+    padding-left: 38px;
+    padding-right: 38px;
 
-    @media (max-width: $mantine-breakpoint-sm) {
-        height: rem(54px);
-        padding-left: rem(18px);
-        padding-right: rem(18px);
+    @media (max-width: 768px) {
+        height: 54px;
+        padding-left: 18px;
+        padding-right: 18px;
         flex: 1;
     }
 }
