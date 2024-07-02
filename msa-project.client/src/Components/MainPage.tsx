@@ -22,30 +22,29 @@ function MainPage() {
                 </h2>
 
                 <Text className={classes.description} color="dimmed">
-                    Build fully functional accessible web applications with ease - Mantine includes more than
-                    100 customizable components and hooks to cover you in any situation
+                    OrganisEasy is your all-in-one productivity companion designed to simplify and enhance your daily
+                    routine. With OrganisEasy, you can effortlessly manage and track your habits, stay focused with a
+                    built-in Pomodoro timer, and organize your tasks with comprehensive lists.
                 </Text>
-                {/*<Group className={classes.controls}>*/}
-                {/*    <Button*/}
-                {/*        size="xl"*/}
-                {/*        className={classes.control}*/}
-                {/*        variant="gradient"*/}
-                {/*        gradient={{ from: 'blue', to: 'cyan' }}*/}
-                {/*    >*/}
-                {/*        Get started*/}
-                {/*    </Button>*/}
+                    <Button
+                        size="xl"
+                        className={classes.control}
+                        variant="gradient"
+                        gradient={{ from: 'blue', to: 'cyan' }}
+                    >
+                        Get started
+                    </Button>
 
-                {/*    <Button*/}
-                {/*        component="a"*/}
-                {/*        href="https://github.com/mantinedev/mantine"*/}
-                {/*        size="xl"*/}
-                {/*        variant="default"*/}
-                {/*        className={classes.control}*/}
-                {/*        leftSection={<GithubIcon size={20} />}*/}
-                {/*    >*/}
-                {/*        GitHub*/}
-                {/*    </Button>*/}
-                {/*</Group> */}
+                    <Button
+                        component="a"
+                        href="https://github.com/WizVader/msa-phase-2"
+                        size="xl"
+                        variant="default"
+                        className={classes.control}
+                        leftSection={<GithubIcon size={20} />}
+                    >
+                        GitHub
+                    </Button>
             </Container>
         </div>
     );

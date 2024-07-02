@@ -55,16 +55,10 @@
     }
 }
 
-.controls {
-    margin-top: calc(var(--mantine-spacing-xl) * 2);
-
-    @media (max-width: $mantine-breakpoint-sm) {
-        margin-top: var(--mantine-spacing-xl);
-    }
-}
 
 .control {
     height: rem(54px);
+    margin: rem(30px);
     padding-left: rem(38px);
     padding-right: rem(38px);
 
