@@ -1,14 +1,22 @@
+import React, { useState } from 'react';
 import { Text, Button } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './MainPage.module.css';
 import Login from './Login.tsx';
+import SignUp from './SignUp.tsx';
 
 function MainPage() {
+    const [showLogin, setShowLogin] = useState(true);
+
+    const toggleForm = () => {
+        setShowLogin(!showLogin);
+    };
+
     return (
         <div className={classes.wrapper}>
             <div className={classes.row}>
                 <div className={classes.left}>
-                    <Login />
+                    {showLogin ? <Login toggleForm={toggleForm} /> : <SignUp toggleForm={toggleForm} />}
                 </div>
                 <div className={classes.right}>
                     <div className={classes.inner}>
