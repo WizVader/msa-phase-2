@@ -1,7 +1,7 @@
 import './App.css';
 import { createTheme, MantineProvider } from '@mantine/core';
-import MainPage from './Components/MainPage.tsx';
-import ThemeSwitcher from './Components/ThemeSwitcher.tsx';
+import MainPage from './Pages/MainPage.tsx';
+//import ThemeSwitcher from './Components/ThemeSwitcher.tsx';
 
 
 const theme = createTheme({
@@ -14,11 +14,8 @@ function App() {
         <MantineProvider theme={theme}>
             <>
                 <div style={{ width: '100%', height: '100%' }}>
-                <MainPage>
-                </MainPage>
-
-                <ThemeSwitcher>
-                    </ThemeSwitcher>
+                    <MainPage>
+                    </MainPage>
                 </div>
             </>
 

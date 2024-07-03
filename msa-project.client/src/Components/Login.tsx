@@ -1,3 +1,4 @@
+import React from 'react';
 import {
     TextInput,
     PasswordInput,
@@ -12,7 +13,12 @@ import {
 } from '@mantine/core';
 import classes from './Login.module.css';
 
-function Login({ toggleForm }) {
+interface LoginProps {
+    toggleForm: () => void;
+}
+
+
+const Login: React.FC<LoginProps> = ({ toggleForm }) => {
     return (
         <Container size={420} my={40}>
             <Title ta="center" className={classes.title}>

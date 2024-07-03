@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Text, Button } from '@mantine/core';
 import { GithubIcon } from '@mantinex/dev-icons';
 import classes from './MainPage.module.css';
-import Login from './Login.tsx';
-import SignUp from './SignUp.tsx';
+import Login from '../Components/Login.tsx';
+import SignUp from '../Components/SignUp.tsx';
 
 function MainPage() {
     const [showLogin, setShowLogin] = useState(true);
