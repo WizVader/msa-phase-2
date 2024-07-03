@@ -23,6 +23,7 @@
     "@mantine/nprogress": "^7.11.0",
     "@mantine/spotlight": "^7.11.0",
     "@mantine/tiptap": "^7.11.0",
+    "@mantinex/dev-icons": "^1.0.2",
     "@tabler/icons-react": "^3.7.0",
     "@tiptap/extension-link": "^2.4.0",
     "@tiptap/react": "^2.4.0",
@@ -43,6 +44,10 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "postcss": "^8.4.39",
+    "postcss-preset-mantine": "^1.15.0",
+    "postcss-simple-vars": "^7.0.1",
+    "react-router-dom": "^6.24.0",
     "typescript": "^5.2.2",
     "vite": "^5.3.1"
   }
