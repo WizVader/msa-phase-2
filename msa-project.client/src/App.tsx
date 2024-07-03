@@ -1,6 +1,7 @@
 import './App.css';
 import { createTheme, MantineProvider } from '@mantine/core';
 import MainPage from './Pages/MainPage.tsx';
+import PomodoroPage from './Pages/PomodoroPage.tsx';
 //import ThemeSwitcher from './Components/ThemeSwitcher.tsx';
 
 
@@ -11,15 +12,15 @@ const theme = createTheme({
 function App() {
 
     return (
-        <MantineProvider theme={theme}>
+        <MantineProvider defaultColorScheme='light' >
             <>
                 <div style={{ width: '100%', height: '100%' }}>
-                    <MainPage>
-                    </MainPage>
+                    <PomodoroPage>
+                    </PomodoroPage>
                 </div>
             </>
 
-        </MantineProvider>
+        </MantineProvider >
     );
 }
 
