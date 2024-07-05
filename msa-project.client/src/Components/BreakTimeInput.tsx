@@ -1,5 +1,6 @@
 import React from 'react';
-import { NumberInput } from '@mantine/core';
+import { NumberInput, Slider } from '@mantine/core';
+import classes from './Slider.module.css';
 
 interface BreakTimeInputProps {
     breakTime: number;
@@ -8,10 +9,13 @@ interface BreakTimeInputProps {
 
 const BreakTimeInput: React.FC<BreakTimeInputProps> = ({ breakTime, setBreakTime }) => {
     return (
-        <div>
-            <label>Break Time:
-                <NumberInput
-                    value={breakTime}
+        <div className={classes.slideContainer}>
+            <label>Break Time
+                <Slider
+                    label={breakTime}
+                    min={5}
+                    size="xl"
+                    max={25}
                     onChange={(value) => setBreakTime(value as number)}
                 />
             </label>
