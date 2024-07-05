@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { NumberInput } from '@mantine/core';
+import classes from './NumberOfSessionsInput.module.css';
 interface NumberOfSessionsInputProps {
     numberOfSessions: number;
     setNumberOfSessions: (sessions: number) => void;
@@ -7,14 +8,13 @@ interface NumberOfSessionsInputProps {
 
 const NumberOfSessionsInput: React.FC<NumberOfSessionsInputProps> = ({ numberOfSessions, setNumberOfSessions }) => {
     return (
-        <div>
-            <label>Number of Sessions:
-                <input
-                    type="number"
-                    value={numberOfSessions}
-                    onChange={(e) => setNumberOfSessions(Number(e.target.value))}
-                />
-            </label>
+        <div >
+            <NumberInput
+                classNames={{ root: classes.root, label: classes.label }}
+                value={numberOfSessions}
+                label="Number of Sessions: "
+                onChange={(value) => setNumberOfSessions(value as number)}
+            />
         </div>
     );
 }

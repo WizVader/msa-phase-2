@@ -1,4 +1,5 @@
 import React from 'react';
+import { NumberInput } from '@mantine/core';
 
 interface BreakTimeInputProps {
     breakTime: number;
@@ -9,10 +10,9 @@ const BreakTimeInput: React.FC<BreakTimeInputProps> = ({ breakTime, setBreakTime
     return (
         <div>
             <label>Break Time:
-                <input
-                    type="number"
+                <NumberInput
                     value={breakTime}
-                    onChange={(e) => setBreakTime(Number(e.target.value))}
+                    onChange={(value) => setBreakTime(value as number)}
                 />
             </label>
         </div>

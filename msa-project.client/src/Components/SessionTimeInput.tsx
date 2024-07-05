@@ -1,4 +1,5 @@
 import React from 'react';
+import { NumberInput } from '@mantine/core';
 
 interface SessionTimeInputProps {
     sessionTime: number;
@@ -9,10 +10,9 @@ const SessionTimeInput: React.FC<SessionTimeInputProps> = ({ sessionTime, setSes
     return (
         <div>
             <label>Session Time:
-                <input
-                    type="number"
+                <NumberInput
                     value={sessionTime}
-                    onChange={(e) => setSessionTime(Number(e.target.value))}
+                    onChange={(value) => setSessionTime(value as number)}
                 />
             </label>
         </div>

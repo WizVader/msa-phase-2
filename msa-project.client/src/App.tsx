@@ -15,8 +15,7 @@ function App() {
         <MantineProvider defaultColorScheme='light' >
             <>
                 <div style={{ width: '100%', height: '100%' }}>
-                    <PomodoroPage>
-                    </PomodoroPage>
+                    <PomodoroPage></PomodoroPage>
                 </div>
             </>
 
