@@ -75,7 +75,7 @@ const Timer: React.FC = () => {
                         size={200}
                     />
                 </div>
-                <div className='timer'>{timerMinutes}:{timerSeconds}</div>
+                {/*<div className='timer'>{timerMinutes}:{timerSeconds}</div>*/}
                 <div className={classes.startButton}><button onClick={startTimer}>Start</button></div>
                 <div>{isBreak ? "Break Time" : `Session ${currentSession}`}</div>
                 <div className={classes.sessionInput}><SessionTimeInput sessionTime={sessionTime} setSessionTime={setSessionTime} /></div>
