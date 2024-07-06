@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { RingProgress, Text } from '@mantine/core';
 import SessionTimeInput from './SessionTimeInput';
 import BreakTimeInput from './BreakTimeInput';
 import NumberOfSessionsInput from './NumberOfSessionsInput';
@@ -54,20 +55,32 @@ const Timer: React.FC = () => {
         setIsRunning(true);
     };
 
+    const calculatePercentage = (minutes: number, seconds: number, sessionTime: number) => {
+        const totalTimePassed = (minutes * 60) + seconds;
+        const totalSessionTimeInSeconds = sessionTime * 60;
+        return (totalTimePassed / totalSessionTimeInSeconds) * 100;
+    };
+
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
+    const progressValue = calculatePercentage(minutes, seconds, sessionTime);
 
     return (
         <>
             <section className={classes.pomoWrapper}>
-
+                <div>
+                    <RingProgress
+                        sections={[{ value: progressValue, color: 'blue' }]}
+                        label={<Text c="blue" fw={700} ta="center" size="xl">{timerMinutes}:{timerSeconds}</Text>}
+                        size={200}
+                    />
+                </div>
                 <div className='timer'>{timerMinutes}:{timerSeconds}</div>
                 <div className={classes.startButton}><button onClick={startTimer}>Start</button></div>
                 <div>{isBreak ? "Break Time" : `Session ${currentSession}`}</div>
                 <div className={classes.sessionInput}><SessionTimeInput sessionTime={sessionTime} setSessionTime={setSessionTime} /></div>
                 <div className={classes.breakInput}><BreakTimeInput breakTime={breakTime} setBreakTime={setBreakTime} /></div>
                 <div className={classes.numSessionsInput}><NumberOfSessionsInput numberOfSessions={numberOfSessions} setNumberOfSessions={setNumberOfSessions} /></div>
-
             </section >
         </>
     );
