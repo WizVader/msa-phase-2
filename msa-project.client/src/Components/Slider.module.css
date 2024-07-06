@@ -1,11 +1,33 @@
 .label {
-    margin-bottom: rem(10px);
+    padding: rem(10px);
 }
 
-.wrapper {
-    width: 4vw;
+.pomoWrapper {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .slideContainer {
     width: 25vw;
+}
+
+.startButton {
+    margin: rem(40px);
+}
+
+.sessionInput {
+    margin: rem(20px);
+}
+
+.breakInput {
+    margin: rem(20px);
+}
+
+.numSessionsInput {
+    margin: rem(20px);
 }

@@ -15,7 +15,7 @@ const NumberOfSessionsInput: React.FC<NumberOfSessionsInputProps> = ({ numberOfS
                     size="xl"
                     label={numberOfSessions}
                     min={1}
-                    max={25}
+                    max={10}
                     onChange={(value) => setNumberOfSessions(value as number)}
                 />
             </label>

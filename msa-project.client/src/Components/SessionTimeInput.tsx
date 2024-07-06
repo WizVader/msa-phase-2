@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberInput, Slider } from '@mantine/core';
+import { Text, Slider } from '@mantine/core';
 import classes from './Slider.module.css';
 
 interface SessionTimeInputProps {
@@ -10,16 +10,15 @@ interface SessionTimeInputProps {
 const SessionTimeInput: React.FC<SessionTimeInputProps> = ({ sessionTime, setSessionTime }) => {
     return (
         <div className={classes.slideContainer}>
-            <label>Session Time
+            <Text className={classes.label}>Session Time
                 <Slider
-                    classNames={{ label: classes.label }}
                     label={sessionTime}
                     size="xl"
                     min={10}
                     max={60}
                     onChange={(value) => setSessionTime(value as number)}
                 />
-            </label>
+            </Text>
         </div>
     );
 }

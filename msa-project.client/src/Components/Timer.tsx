@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SessionTimeInput from './SessionTimeInput';
 import BreakTimeInput from './BreakTimeInput';
 import NumberOfSessionsInput from './NumberOfSessionsInput';
+import classes from './Slider.module.css'
 
 const Timer: React.FC = () => {
     const [minutes, setMinutes] = useState<number>(25);
@@ -57,14 +58,18 @@ const Timer: React.FC = () => {
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
     return (
-        <div>
-            <SessionTimeInput sessionTime={sessionTime} setSessionTime={setSessionTime} />
-            <BreakTimeInput breakTime={breakTime} setBreakTime={setBreakTime} />
-            <NumberOfSessionsInput numberOfSessions={numberOfSessions} setNumberOfSessions={setNumberOfSessions} />
-            <button onClick={startTimer}>Start</button>
-            <div className='timer'>{timerMinutes}:{timerSeconds}</div>
-            <div>{isBreak ? "Break Time" : `Session ${currentSession}`}</div>
-        </div>
+        <>
+            <section className={classes.pomoWrapper}>
+
+                <div className='timer'>{timerMinutes}:{timerSeconds}</div>
+                <div className={classes.startButton}><button onClick={startTimer}>Start</button></div>
+                <div>{isBreak ? "Break Time" : `Session ${currentSession}`}</div>
+                <div className={classes.sessionInput}><SessionTimeInput sessionTime={sessionTime} setSessionTime={setSessionTime} /></div>
+                <div className={classes.breakInput}><BreakTimeInput breakTime={breakTime} setBreakTime={setBreakTime} /></div>
+                <div className={classes.numSessionsInput}><NumberOfSessionsInput numberOfSessions={numberOfSessions} setNumberOfSessions={setNumberOfSessions} /></div>
+
+            </section >
+        </>
     );
 }
 
