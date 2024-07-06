@@ -6,28 +6,46 @@
     display: flex;
     height: 100%;
     width: 100%;
-    width: 100%;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    padding: rem(20px);
 }
 
 .slideContainer {
     width: 25vw;
 }
 
+.startButtonWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: rem(15px);
+    gap: rem(15px);
+}
+
 .startButton {
     margin: rem(40px);
 }
 
-.sessionInput {
-    margin: rem(20px);
-}
-
-.breakInput {
-    margin: rem(20px);
-}
-
+.sessionInput,
+.breakInput,
 .numSessionsInput {
     margin: rem(20px);
+}
+
+@media (max-width: 600px) {
+    .slideContainer {
+        width: 80vw; /* Adjust the width for smaller screens */
+    }
+
+    .startButtonWrapper {
+        flex-direction: column;
+        gap: rem(10px);
+    }
+
+    .sessionInput,
+    .breakInput,
+    .numSessionsInput {
+        width: 100%; /* Full width for smaller screens */
+    }
 }

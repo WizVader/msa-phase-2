@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { ActionIcon, RingProgress, Text, Title } from '@mantine/core';
-import { IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { ActionIcon, RingProgress, Title } from '@mantine/core';
+import { IconPlayerPauseFilled, IconPlayerPlayFilled, IconRepeat } from '@tabler/icons-react';
 import SessionTimeInput from './SessionTimeInput';
 import BreakTimeInput from './BreakTimeInput';
 import NumberOfSessionsInput from './NumberOfSessionsInput';
@@ -17,18 +17,32 @@ const breakPhrases = [
 const getRandomPhrase = (phrases: string[]) => phrases[Math.floor(Math.random() * phrases.length)];
 
 const Timer: React.FC = () => {
-    const [minutes, setMinutes] = useState<number>(10);
+    const initialSessionTime = 10;
+    const initialBreakTime = 5;
+    const initialNumberOfSessions = 4;
+
+    const [minutes, setMinutes] = useState<number>(initialSessionTime);
     const [seconds, setSeconds] = useState<number>(0);
-    const [sessionTime, setSessionTime] = useState<number>(10);
-    const [breakTime, setBreakTime] = useState<number>(5);
-    const [numberOfSessions, setNumberOfSessions] = useState<number>(4);
+    const [sessionTime, setSessionTime] = useState<number>(initialSessionTime);
+    const [breakTime, setBreakTime] = useState<number>(initialBreakTime);
+    const [numberOfSessions, setNumberOfSessions] = useState<number>(initialNumberOfSessions);
     const [currentSession, setCurrentSession] = useState<number>(1);
     const [isBreak, setIsBreak] = useState<boolean>(false);
     const [isRunning, setIsRunning] = useState<boolean>(false);
-    const [initialSessionTime, setInitialSessionTime] = useState<number>(10);
     const [motivationalPhrase, setMotivationalPhrase] = useState<string>(getRandomPhrase(motivationalWords));
     const [breakPhrase, setBreakPhrase] = useState<string>(getRandomPhrase(breakPhrases));
     const [hasStarted, setHasStarted] = useState<boolean>(false);
+    const [initialTime, setInitialTime] = useState<number>(initialSessionTime * 60);
+    const [progressValue, setProgressValue] = useState<number>(0);
+
+    const [sliderSessionTime, setSliderSessionTime] = useState<number>(initialSessionTime);
+    const [sliderBreakTime, setSliderBreakTime] = useState<number>(initialBreakTime);
+
+    const isRunningRef = useRef(isRunning);
+
+    useEffect(() => {
+        isRunningRef.current = isRunning;
+    }, [isRunning]);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -39,8 +53,8 @@ const Timer: React.FC = () => {
                         if (isBreak) {
                             setIsBreak(false);
                             setMinutes(sessionTime);
-                            setInitialSessionTime(sessionTime);
                             setCurrentSession(prev => prev + 1);
+                            setInitialTime(sessionTime * 60); // Update initial time when starting a new session
                             if (currentSession >= numberOfSessions) {
                                 clearInterval(interval);
                                 alert("Pomodoro sessions complete!");
@@ -59,6 +73,7 @@ const Timer: React.FC = () => {
                 } else {
                     setSeconds(seconds - 1);
                 }
+                setProgressValue(calculatePercentage(minutes, seconds, initialTime));
             }, 1000);
         }
         return () => clearInterval(interval);
@@ -68,19 +83,34 @@ const Timer: React.FC = () => {
         if (!hasStarted) {
             setMotivationalPhrase(getRandomPhrase(motivationalWords));
             setHasStarted(true);
+            setInitialTime(minutes * 60 + seconds); // Set initial time when starting the timer
         }
         setIsRunning(prev => !prev);
     };
 
-    const calculatePercentage = (minutes: number, seconds: number, initialSessionTime: number) => {
-        const totalTimePassed = (initialSessionTime * 60) - ((minutes * 60) + seconds);
-        const totalSessionTimeInSeconds = initialSessionTime * 60;
-        return (totalTimePassed / totalSessionTimeInSeconds) * 100;
+    const resetTimer = () => {
+        setMinutes(sliderSessionTime);
+        setSeconds(0);
+        setSessionTime(sliderSessionTime);
+        setBreakTime(sliderBreakTime);
+        setNumberOfSessions(initialNumberOfSessions);
+        setCurrentSession(1);
+        setIsBreak(false);
+        setIsRunning(false);
+        setMotivationalPhrase(getRandomPhrase(motivationalWords));
+        setBreakPhrase(getRandomPhrase(breakPhrases));
+        setHasStarted(false);
+        setInitialTime(sliderSessionTime * 60); // Reset initial time
+        setProgressValue(0);
+    };
+
+    const calculatePercentage = (minutes: number, seconds: number, initialTime: number) => {
+        const totalTimePassed = initialTime - ((minutes * 60) + seconds);
+        return (totalTimePassed / initialTime) * 100;
     };
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
-    const progressValue = calculatePercentage(minutes, seconds, initialSessionTime);
 
     return (
         <>
@@ -92,16 +122,52 @@ const Timer: React.FC = () => {
                         size={220}
                     />
                 </div>
-                <div className={classes.startButton}>
-                    {/*<ActionIcon variant="gradient" size="xl" radius="xl" gradient={{ from: 'blue', to: 'cyan', deg: 90 }} onClick={toggleTimer}>*/}
+                <div className={classes.startButtonWrapper}>
                     <ActionIcon size="xl" radius="xl" onClick={toggleTimer}>
                         {isRunning ? <IconPlayerPauseFilled /> : <IconPlayerPlayFilled />}
                     </ActionIcon>
+                    <ActionIcon size="xl" radius="xl" onClick={resetTimer}>
+                        <IconRepeat />
+                    </ActionIcon>
                 </div>
                 <div>{hasStarted ? (isBreak ? breakPhrase : `${motivationalPhrase} Session ${currentSession}`) : "Welcome to the Pomodoro Timer!"}</div>
-                <div className={classes.sessionInput}><SessionTimeInput sessionTime={sessionTime} setSessionTime={setSessionTime} /></div>
-                <div className={classes.breakInput}><BreakTimeInput breakTime={breakTime} setBreakTime={setBreakTime} /></div>
-                <div className={classes.numSessionsInput}><NumberOfSessionsInput numberOfSessions={numberOfSessions} setNumberOfSessions={setNumberOfSessions} /></div>
+                <div className={classes.sessionInput}>
+                    <SessionTimeInput
+                        sessionTime={sliderSessionTime}
+                        setSessionTime={time => {
+                            if (!hasStarted) {
+                                setSliderSessionTime(time);
+                                setSessionTime(time);
+                                setMinutes(time);
+                                setInitialTime(time * 60);
+                            }
+                        }}
+                    />
+                </div>
+                <div className={classes.breakInput}>
+                    <BreakTimeInput
+                        breakTime={sliderBreakTime}
+                        setBreakTime={time => {
+                            if (!hasStarted) {
+                                setSliderBreakTime(time);
+                                setBreakTime(time);
+                                if (isBreak) {
+                                    setMinutes(time);
+                                }
+                            }
+                        }}
+                    />
+                </div>
+                <div className={classes.numSessionsInput}>
+                    <NumberOfSessionsInput
+                        numberOfSessions={numberOfSessions}
+                        setNumberOfSessions={num => {
+                            if (!hasStarted) {
+                                setNumberOfSessions(num);
+                            }
+                        }}
+                    />
+                </div>
             </section >
         </>
     );
