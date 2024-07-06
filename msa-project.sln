@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "msa-project.Server", "msa-project.Server\msa-project.Server.csproj", "{5E4529B3-E339-4793-940C-0138E3EC043B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "msa-project.Server", "msa-project.Server\msa-project.Server.csproj", "{5E4529B3-E339-4793-940C-0138E3EC043B}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "msa-project.client", "msa-project.client\msa-project.client.esproj", "{AABB51D3-DFE9-4032-B15A-7E288FD89711}"
 EndProject
