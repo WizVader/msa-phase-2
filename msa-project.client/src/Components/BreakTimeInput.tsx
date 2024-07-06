@@ -1,5 +1,5 @@
 import React from 'react';
-import { NumberInput, Slider } from '@mantine/core';
+import { Slider } from '@mantine/core';
 import classes from './Slider.module.css';
 
 interface BreakTimeInputProps {
