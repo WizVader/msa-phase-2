@@ -6,14 +6,15 @@ import NumberOfSessionsInput from './NumberOfSessionsInput';
 import classes from './Slider.module.css'
 
 const Timer: React.FC = () => {
-    const [minutes, setMinutes] = useState<number>(25);
+    const [minutes, setMinutes] = useState<number>(10);
     const [seconds, setSeconds] = useState<number>(0);
-    const [sessionTime, setSessionTime] = useState<number>(25);
+    const [sessionTime, setSessionTime] = useState<number>(10);
     const [breakTime, setBreakTime] = useState<number>(5);
     const [numberOfSessions, setNumberOfSessions] = useState<number>(4);
     const [currentSession, setCurrentSession] = useState<number>(1);
     const [isBreak, setIsBreak] = useState<boolean>(false);
     const [isRunning, setIsRunning] = useState<boolean>(false);
+    const [initialSessionTime, setInitialSessionTime] = useState<number>(10);
 
     useEffect(() => {
         let interval: NodeJS.Timeout;
@@ -24,6 +25,7 @@ const Timer: React.FC = () => {
                         if (isBreak) {
                             setIsBreak(false);
                             setMinutes(sessionTime);
+                            setInitialSessionTime(sessionTime);
                             setCurrentSession(prev => prev + 1);
                             if (currentSession >= numberOfSessions) {
                                 clearInterval(interval);
@@ -53,17 +55,18 @@ const Timer: React.FC = () => {
         setCurrentSession(1);
         setIsBreak(false);
         setIsRunning(true);
+        setInitialSessionTime(sessionTime);
     };
 
-    const calculatePercentage = (minutes: number, seconds: number, sessionTime: number) => {
+    const calculatePercentage = (minutes: number, seconds: number, initialSessionTime: number) => {
         const totalTimePassed = (minutes * 60) + seconds;
-        const totalSessionTimeInSeconds = sessionTime * 60;
+        const totalSessionTimeInSeconds = initialSessionTime * 60;
         return (totalTimePassed / totalSessionTimeInSeconds) * 100;
     };
 
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
-    const progressValue = calculatePercentage(minutes, seconds, sessionTime);
+    const progressValue = isRunning ? calculatePercentage(minutes, seconds, initialSessionTime) : 0;
 
     return (
         <>
@@ -71,11 +74,10 @@ const Timer: React.FC = () => {
                 <div>
                     <RingProgress
                         sections={[{ value: progressValue, color: 'blue' }]}
-                        label={<Text c="blue" fw={700} ta="center" size="xl">{timerMinutes}:{timerSeconds}</Text>}
+                        label={<Text c="blue" fw={800} ta="center" size="xl">{timerMinutes}:{timerSeconds}</Text>}
                         size={200}
                     />
                 </div>
-                {/*<div className='timer'>{timerMinutes}:{timerSeconds}</div>*/}
                 <div className={classes.startButton}><button onClick={startTimer}>Start</button></div>
                 <div>{isBreak ? "Break Time" : `Session ${currentSession}`}</div>
                 <div className={classes.sessionInput}><SessionTimeInput sessionTime={sessionTime} setSessionTime={setSessionTime} /></div>
