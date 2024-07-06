@@ -35,6 +35,8 @@ app.MapPost("/logout", async (SignInManager<ApplicationUser> signInManager) =>
 
 }).RequireAuthorization();
 
+
+
 app.MapGet("/pingauth", (ClaimsPrincipal user) =>
 {
     var email = user.FindFirstValue(ClaimTypes.Email); // get the user's email from the claim
