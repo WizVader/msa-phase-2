@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Stepper } from '@mantine/core';
 
 function HabitCheckBox() {
-    const [active, setActive] = useState(1);
+    const [active, setActive] = useState(2);
 
     return (
         <Stepper active={active} onStepClick={setActive} iconPosition="right">
