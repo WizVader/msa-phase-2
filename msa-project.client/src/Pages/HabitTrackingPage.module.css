@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.habitItem {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.checkbox {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 10px; /* Space for delete icon */
+}
+
+.habitItem .mantine-ActionIcon-root {
+    margin-left: 10px;
+}
+
+.button {
+    margin: 10px;
+}
+
+@media (max-width: 600px) {
+    .habitItem {
+        max-width: 100%;
+    }
+
+    .checkbox {
+        max-width: calc(100% - 40px); /* Adjust to ensure space for delete icon */
+    }
+
+    .habitItem .mantine-ActionIcon-root {
+        margin-left: auto;
+    }
+}
