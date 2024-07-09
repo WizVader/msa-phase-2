@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Center, Tooltip, UnstyledButton, Stack, rem } from '@mantine/core';
 import {
     IconClockFilled,
@@ -9,32 +9,41 @@ import {
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavigationBar.module.css';
+import { Link, useLocation } from 'react-router-dom';
 
 interface NavbarLinkProps {
     icon: typeof IconClockFilled;
     label: string;
+    path: string;
     active?: boolean;
     onClick?(): void;
 }
 
-function NavbarLink({ icon: Icon, label, active, onClick }: NavbarLinkProps) {
+function NavbarLink({ icon: Icon, label, path, active, onClick }: NavbarLinkProps) {
     return (
         <Tooltip label={label} position="right" transitionProps={{ duration: 0 }}>
-            <UnstyledButton onClick={onClick} className={classes.link} data-active={active || undefined}>
-                <Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
-            </UnstyledButton>
+            <Link to={path}>
+                <UnstyledButton onClick={onClick} className={classes.link} data-active={active || undefined}>
+                    <Icon style={{ width: rem(20), height: rem(20) }} stroke={1.5} />
+                </UnstyledButton>
+            </Link>
         </Tooltip>
     );
 }
 
 const mockdata = [
-    { icon: IconClockFilled, label: 'Pomodoro' },
-    { icon: IconSquareCheckFilled, label: 'Tasks' },
-    { icon: IconTimeline, label: 'Habits' },
+    { icon: IconClockFilled, label: 'Pomodoro', path: '/pomodoro' },
+    { icon: IconSquareCheckFilled, label: 'Tasks', path: '/tasks' },
+    { icon: IconTimeline, label: 'Habits', path: '/habittracking' },
 ];
 
 function NavigationBar() {
-    const [active, setActive] = useState(2);
+    const location = useLocation();
+    const [active, setActive] = useState(mockdata.findIndex(link => link.path === location.pathname));
+
+    useEffect(() => {
+        setActive(mockdata.findIndex(link => link.path === location.pathname));
+    }, [location.pathname]);
 
     const links = mockdata.map((link, index) => (
         <NavbarLink
@@ -50,16 +59,14 @@ function NavigationBar() {
             <Center>
                 <MantineLogo type="mark" size={30} />
             </Center>
-
             <div className={classes.navbarMain}>
                 <Stack justify="center" gap={0}>
                     {links}
                 </Stack>
             </div>
-
             <Stack justify="center" gap={0}>
-                <NavbarLink icon={IconSettings} label="Settings" />
-                <NavbarLink icon={IconLogout} label="Logout" />
+                <NavbarLink icon={IconSettings} label="Settings" path="/settings" active={location.pathname === '/settings'} />
+                <NavbarLink icon={IconLogout} label="Logout" path="/logout" active={location.pathname === '/logout'} />
             </Stack>
         </nav>
     );
