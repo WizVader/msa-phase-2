@@ -32,8 +32,8 @@ html, body {
     justify-content: center;
     align-items: center;
     padding: 10px;
-    text-align: center; /* Center text */
-    transition: all 0.3s ease; /* Smooth transition for background colors */
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
 .left {
