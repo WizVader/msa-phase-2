@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Checkbox, Group, Button, TextInput, Text, ActionIcon, Stack, Menu } from '@mantine/core';
 import { IconTrashFilled, IconRun, IconBookFilled, IconBedFilled, IconBarbellFilled, IconBallpenFilled } from '@tabler/icons-react';
 import classes from './HabitTrackingPage.module.css';
+import StatsCard from '../Components/StatsCard';
 
 interface CheckboxItem {
     id: number;
@@ -82,7 +83,7 @@ function HabitTrackingPage() {
                     </Stack>
                 </div>
                 <div className={classes.right}>
-                    Hello
+                    <StatsCard></StatsCard>
                 </div>
             </div>
         </div>
