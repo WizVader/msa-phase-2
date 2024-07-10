@@ -14,6 +14,7 @@ function HabitTrackingPage() {
     const [checkboxes, setCheckboxes] = useState<CheckboxItem[]>([]);
     const [label, setLabel] = useState<string>('');
     const [selectedIcon, setSelectedIcon] = useState<React.ReactNode>(<ActionIcon size="md"><IconBookFilled size={16} /></ActionIcon>);
+    const [selectedHabit, setSelectedHabit] = useState<CheckboxItem | null>(null);
 
     const addCheckbox = () => {
         if (label.trim()) {
@@ -24,6 +25,9 @@ function HabitTrackingPage() {
 
     const deleteCheckbox = (id: number) => {
         setCheckboxes(checkboxes.filter((checkbox) => checkbox.id !== id));
+        if (selectedHabit?.id === id) {
+            setSelectedHabit(null);
+        }
     };
 
     const iconOptions = [
@@ -32,8 +36,11 @@ function HabitTrackingPage() {
         { icon: <ActionIcon size="md"><IconBedFilled size={16} /></ActionIcon>, label: 'Sleep' },
         { icon: <ActionIcon size="md"><IconBarbellFilled size={16} /></ActionIcon>, label: 'Gym' },
         { icon: <ActionIcon size="md"><IconBallpenFilled size={16} /></ActionIcon>, label: 'Write' },
-
     ];
+
+    const handleHabitClick = (habit: CheckboxItem) => {
+        setSelectedHabit(habit);
+    };
 
     return (
         <div className={classes.container}>
@@ -71,19 +78,21 @@ function HabitTrackingPage() {
                     </div>
                     <Stack mt="lg">
                         {checkboxes.map((checkbox) => (
-                            <Group key={checkbox.id} className={classes.habitItem}>
-                                <div className={classes.icon}>{checkbox.icon}</div>
-                                <div className={classes.checkbox}>{checkbox.label}</div>
-                                <Checkbox size="lg" radius="xl" />
-                                <ActionIcon color="red" onClick={() => deleteCheckbox(checkbox.id)} size="md">
-                                    <IconTrashFilled size={16} />
-                                </ActionIcon>
-                            </Group>
+                            <div key={checkbox.id} onClick={() => handleHabitClick(checkbox)}>
+                                <Group className={classes.habitItem}>
+                                    <div className={classes.icon}>{checkbox.icon}</div>
+                                    <div className={classes.checkbox}>{checkbox.label}</div>
+                                    <Checkbox size="lg" radius="xl" />
+                                    <ActionIcon color="red" onClick={(e) => { e.stopPropagation(); deleteCheckbox(checkbox.id); }} size="md">
+                                        <IconTrashFilled size={16} />
+                                    </ActionIcon>
+                                </Group>
+                            </div>
                         ))}
                     </Stack>
                 </div>
                 <div className={classes.right}>
-                    <StatsCard></StatsCard>
+                    {selectedHabit && <StatsCard icon={selectedHabit.icon} label={selectedHabit.label} />}
                 </div>
             </div>
         </div>
