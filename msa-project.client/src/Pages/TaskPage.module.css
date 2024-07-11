@@ -1,0 +1,39 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+}
+
+.left, .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.left {
+    flex: 3;
+    background-color: var(--mantine-color-light-2);
+}
+
+.right {
+    flex: 2;
+    background-color: var(--mantine-color-light-3);
+}
+
+@media (max-width: 1024px) {
+    .left, .right {
+        flex: 1 1 100%;
+    }
+}
