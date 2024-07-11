@@ -94,7 +94,9 @@ function HabitTrackingPage() {
                     </div>
                 </div>
                 <div className={classes.right}>
-                    {selectedHabit && <StatsCard icon={selectedHabit.icon} label={selectedHabit.label} />}
+                    <div className={classes.rightcontainer}>
+                        {selectedHabit && <StatsCard icon={selectedHabit.icon} label={selectedHabit.label} />}
+                    </div>
                 </div>
             </div>
         </div>

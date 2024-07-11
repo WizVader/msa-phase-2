@@ -86,11 +86,15 @@
         margin-left: auto;
     }
 
-    .left {
-        align-content: center;
-    }
 
     .leftcontainer {
+        padding-top: calc(2.5rem* var(--mantine-scale));
+        max-width: calc(76.25rem* var(--mantine-scale));
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .rightcontainer {
         padding-top: calc(2.5rem* var(--mantine-scale));
         max-width: calc(76.25rem* var(--mantine-scale));
         margin-left: auto;
