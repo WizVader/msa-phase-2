@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Checkbox, Group, Button, TextInput, Text, ActionIcon, Stack, Menu } from '@mantine/core';
+import { Checkbox, Group, Button, TextInput, Text, ActionIcon, Stack, Menu, Card } from '@mantine/core';
 import { IconTrashFilled, IconRun, IconBookFilled, IconBedFilled, IconBarbellFilled, IconBallpenFilled } from '@tabler/icons-react';
 import classes from './HabitTrackingPage.module.css';
 import StatsCard from '../Components/StatsCard';
@@ -80,14 +80,16 @@ function HabitTrackingPage() {
                         <Stack mt="lg">
                             {checkboxes.map((checkbox) => (
                                 <div key={checkbox.id} onClick={() => handleHabitClick(checkbox)}>
-                                    <Group className={classes.habitItem}>
-                                        <div className={classes.icon}>{checkbox.icon}</div>
-                                        <div className={classes.checkbox}>{checkbox.label}</div>
-                                        <Checkbox size="lg" radius="xl" />
-                                        <ActionIcon color="red" onClick={(e) => { e.stopPropagation(); deleteCheckbox(checkbox.id); }} size="md">
-                                            <IconTrashFilled size={16} />
-                                        </ActionIcon>
-                                    </Group>
+                                    <Card>
+                                        <Group className={classes.habitItem}>
+                                            <div className={classes.icon}>{checkbox.icon}</div>
+                                            <div className={classes.checkbox}>{checkbox.label}</div>
+                                            <Checkbox size="lg" radius="xl" />
+                                            <ActionIcon color="red" onClick={(e) => { e.stopPropagation(); deleteCheckbox(checkbox.id); }} size="md">
+                                                <IconTrashFilled size={16} />
+                                            </ActionIcon>
+                                        </Group>
+                                    </Card>
                                 </div>
                             ))}
                         </Stack>

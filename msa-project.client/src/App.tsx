@@ -1,7 +1,7 @@
 import './App.css';
 import { createTheme, MantineProvider } from '@mantine/core';
-import { BrowserRouter as Router, Route, Routes, RouterProvider, createBrowserRouter } from 'react-router-dom';
-import MainPage from './Pages/MainPage.tsx';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import TaskPage from './Pages/TaskPage.tsx';
 import Layout from './Layout.tsx';
 import PomodoroPage from './Pages/PomodoroPage.tsx';
 import HabitTrackingPage from './Pages/HabitTrackingPage.tsx';
@@ -24,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: "/habittracking",
                 element: <HabitTrackingPage />
+            },
+            {
+                path: "/tasks",
+                element: <TaskPage />
             }
         ]
     }
