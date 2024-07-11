@@ -1,4 +1,4 @@
-import { ThemeIcon, Text, Group, Paper } from '@mantine/core';
+import { ThemeIcon, Text, Group, Paper, ActionIcon } from '@mantine/core';
 import classes from './StatsCard.module.css';
 import React from 'react';
 
@@ -10,14 +10,16 @@ interface StatsCardProps {
 const StatsCard: React.FC<StatsCardProps> = ({ icon, label }) => {
     return (
         <Paper radius="md" withBorder className={classes.card} mt={20}>
-            <ThemeIcon className={classes.icon} size={60} radius={60}>
-                {icon}
-            </ThemeIcon>
-
-            <Text ta="center" fw={700} className={classes.title}>
-                {label}
-            </Text>
-
+            <Group justify="center" mt="xs">
+                <ActionIcon className={classes.icon} size={60} radius={60}>
+                    {icon}
+                </ActionIcon>
+            </Group>
+            <Group justify="center" mt="xs">
+                <Text ta="center" fw={700} className={classes.title}>
+                    {label}
+                </Text>
+            </Group>
             <Group justify="space-between" mt="xs">
                 <Text fz="sm" c="dimmed">
                     Current Streak
