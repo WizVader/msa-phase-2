@@ -1,19 +1,39 @@
 import { useState } from 'react';
-import { Text, TextInput, Button, Stack, Card, Group, ActionIcon } from '@mantine/core'
+import { Text, TextInput, Button, Stack, Card, Group, ActionIcon } from '@mantine/core';
 import { IconTrashFilled } from '@tabler/icons-react';
+import { useEditor } from '@tiptap/react';
+import { Link } from '@tiptap/extension-link';
 import TasksRichTextEditor from '../Components/TasksRichTextEditor';
+import Highlight from '@tiptap/extension-highlight';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import TextAlign from '@tiptap/extension-text-align';
+import Superscript from '@tiptap/extension-superscript';
+import SubScript from '@tiptap/extension-subscript';
 import classes from './TaskPage.module.css';
 
 interface TaskItem {
     id: number;
     label: string;
-
 }
 
 function TaskPage() {
     const [tasks, setTasks] = useState<TaskItem[]>([]);
     const [label, setLabel] = useState<string>('');
     const [selectedTask, setSelectedTask] = useState<TaskItem | null>(null);
+
+    const editor = useEditor({
+        extensions: [
+            StarterKit,
+            Underline,
+            Link,
+            Superscript,
+            SubScript,
+            Highlight,
+            TextAlign.configure({ types: ['heading', 'paragraph'] }),
+        ],
+        content: '',
+    });
 
     const addTask = () => {
         if (label.trim()) {
@@ -31,6 +51,10 @@ function TaskPage() {
 
     const handleTaskClick = (task: TaskItem) => {
         setSelectedTask(task);
+        if (editor) {
+            const content = `<h2 style="text-align: center;">${task.label}</h2>`;
+            editor.commands.setContent(content);
+        }
     }
 
     return (
@@ -51,7 +75,7 @@ function TaskPage() {
                                 label="New Task"
                                 maxLength={20}
                             />
-                            <Button onClick={addTask} color="blue">Add Task</Button>
+                            <Button onClick={addTask} className={classes.button} color="blue">Add Task</Button>
                         </div>
                         <Stack mt="lg">
                             {tasks.map((task) => (
@@ -71,7 +95,7 @@ function TaskPage() {
                 </div>
                 <div className={classes.right}>
                     <div className={classes.rightContainer}>
-                        {selectedTask && <TasksRichTextEditor heading={selectedTask.label} />}
+                        {selectedTask && <TasksRichTextEditor editor={editor} />}
                     </div>
                 </div>
             </div>

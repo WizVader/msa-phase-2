@@ -32,6 +32,20 @@
     background-color: var(--mantine-color-light-3);
 }
 
+.button {
+    margin-top: 10px;
+}
+
+.tasklabel {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 10px; /* Space for delete icon */
+}
+
 @media (max-width: 1024px) {
     .left, .right {
         flex: 1 1 100%;
