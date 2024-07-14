@@ -11,6 +11,7 @@ import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import classes from './TaskPage.module.css';
+import AuthorizeView from '../Components/AuthorizeView';
 
 interface TaskItem {
     id: number;
@@ -58,48 +59,50 @@ function TaskPage() {
     }
 
     return (
-        <div className={classes.container}>
-            <div className={classes.row}>
-                <div className={classes.left}>
-                    <div className={classes.leftContainer}>
-                        <div>
-                            <h1>
-                                <Text size="xl">Tasks</Text>
-                            </h1>
+        <AuthorizeView>
+            <div className={classes.container}>
+                <div className={classes.row}>
+                    <div className={classes.left}>
+                        <div className={classes.leftContainer}>
+                            <div>
+                                <h1>
+                                    <Text size="xl">Tasks</Text>
+                                </h1>
+                            </div>
+                            <div>
+                                <TextInput
+                                    value={label}
+                                    onChange={(event) => setLabel(event.currentTarget.value)}
+                                    placeholder="Enter task name"
+                                    label="New Task"
+                                    maxLength={20}
+                                />
+                                <Button onClick={addTask} className={classes.button} color="blue">Add Task</Button>
+                            </div>
+                            <Stack mt="lg">
+                                {tasks.map((task) => (
+                                    <div key={task.id} onClick={() => handleTaskClick(task)}>
+                                        <Card>
+                                            <Group>
+                                                <div className={classes.task}>{task.label}</div>
+                                                <ActionIcon onClick={(e) => { e.stopPropagation(); deleteTask(task.id) }} color="red" size="md">
+                                                    <IconTrashFilled size={16} />
+                                                </ActionIcon>
+                                            </Group>
+                                        </Card>
+                                    </div>
+                                ))}
+                            </Stack>
                         </div>
-                        <div>
-                            <TextInput
-                                value={label}
-                                onChange={(event) => setLabel(event.currentTarget.value)}
-                                placeholder="Enter task name"
-                                label="New Task"
-                                maxLength={20}
-                            />
-                            <Button onClick={addTask} className={classes.button} color="blue">Add Task</Button>
-                        </div>
-                        <Stack mt="lg">
-                            {tasks.map((task) => (
-                                <div key={task.id} onClick={() => handleTaskClick(task)}>
-                                    <Card>
-                                        <Group>
-                                            <div className={classes.task}>{task.label}</div>
-                                            <ActionIcon onClick={(e) => { e.stopPropagation(); deleteTask(task.id) }} color="red" size="md">
-                                                <IconTrashFilled size={16} />
-                                            </ActionIcon>
-                                        </Group>
-                                    </Card>
-                                </div>
-                            ))}
-                        </Stack>
                     </div>
-                </div>
-                <div className={classes.right}>
-                    <div className={classes.rightContainer}>
-                        {selectedTask && <TasksRichTextEditor editor={editor} />}
+                    <div className={classes.right}>
+                        <div className={classes.rightContainer}>
+                            {selectedTask && <TasksRichTextEditor editor={editor} />}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </AuthorizeView>
     );
 }
 

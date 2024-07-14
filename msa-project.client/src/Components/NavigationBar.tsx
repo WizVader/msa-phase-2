@@ -32,9 +32,9 @@ function NavbarLink({ icon: Icon, label, path, active, onClick }: NavbarLinkProp
 }
 
 const mockdata = [
-    { icon: IconClockFilled, label: 'Pomodoro', path: '/pomodoro' },
-    { icon: IconSquareCheckFilled, label: 'Tasks', path: '/tasks' },
-    { icon: IconTimeline, label: 'Habits', path: '/habittracking' },
+    { icon: IconClockFilled, label: 'Pomodoro', path: '/home/pomodoro' },
+    { icon: IconSquareCheckFilled, label: 'Tasks', path: '/home/tasks' },
+    { icon: IconTimeline, label: 'Habits', path: '/home/habittracking' },
 ];
 
 function NavigationBar() {

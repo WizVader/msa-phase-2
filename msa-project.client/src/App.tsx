@@ -1,43 +1,47 @@
 import './App.css';
-import { createTheme, MantineProvider } from '@mantine/core';
+import { MantineProvider } from '@mantine/core';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import TaskPage from './Pages/TaskPage.tsx';
-import Layout from './Layout.tsx';
+import MainPage from './Pages/MainPage.tsx';
 import PomodoroPage from './Pages/PomodoroPage.tsx';
 import HabitTrackingPage from './Pages/HabitTrackingPage.tsx';
-//import ThemeSwitcher from './Components/ThemeSwitcher.tsx';
-
-
-const theme = createTheme({
-    /** Put your mantine theme override here */
-});
+import NotFoundTitle from './Components/NotFoundTitle.tsx';
+import Layout from './Layout.tsx';
 
 const router = createBrowserRouter([
     {
         path: "/",
+        element: <MainPage />,
+    },
+    {
+        path: '/home',
         element: <Layout />,
         children: [
             {
-                path: "/pomodoro",
+                path: "/home/pomodoro",
                 element: <PomodoroPage />
             },
             {
-                path: "/habittracking",
+                path: "/home/habittracking",
                 element: <HabitTrackingPage />
             },
             {
-                path: "/tasks",
+                path: "/home/tasks",
                 element: <TaskPage />
             }
         ]
+    },
+    {
+        path: "*",
+        element: <NotFoundTitle />
     }
 ]);
-function App() {
 
+function App() {
     return (
-        <MantineProvider defaultColorScheme='light' >
+        <MantineProvider>
             <RouterProvider router={router} />
-        </MantineProvider >
+        </MantineProvider>
     );
 }
 

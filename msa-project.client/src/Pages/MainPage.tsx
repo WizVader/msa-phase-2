@@ -12,11 +12,16 @@ function MainPage() {
         setShowLogin(!showLogin);
     };
 
+
     return (
         <div className={classes.wrapper}>
             <div className={classes.row}>
                 <div className={classes.left}>
-                    {showLogin ? <Login toggleForm={toggleForm} /> : <SignUp toggleForm={toggleForm} />}
+                    {showLogin ? (
+                        <Login toggleForm={toggleForm} />
+                    ) : (
+                        <SignUp toggleForm={toggleForm} />
+                    )}
                 </div>
                 <div className={classes.right}>
                     <div className={classes.inner}>
