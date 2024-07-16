@@ -10,6 +10,7 @@ import {
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavigationBar.module.css';
 import { Link, useLocation } from 'react-router-dom';
+import LogoutLink from './LogoutLink';
 
 interface NavbarLinkProps {
     icon: typeof IconClockFilled;
@@ -66,7 +67,9 @@ function NavigationBar() {
             </div>
             <Stack justify="center" gap={0}>
                 <NavbarLink icon={IconSettings} label="Settings" path="/settings" active={location.pathname === '/settings'} />
-                <NavbarLink icon={IconLogout} label="Logout" path="/logout" active={location.pathname === '/logout'} />
+                <LogoutLink>
+                    <NavbarLink icon={IconLogout} label="Logout" path="/logout" active={location.pathname === '/logout'} />
+                </LogoutLink>
             </Stack>
         </nav>
     );
