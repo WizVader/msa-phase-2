@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using msa_project.Server.Data;
-using msa_project.Server.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using System.Security.Claims;
+using msa_project.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,15 +29,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultUI();
 
 // Add services to the container
-builder.Services.AddScoped<SignInManager<ApplicationUser>, CustomSignInManager>();
 builder.Services.AddTransient<IEmailSender, DummyEmailSender>();
 builder.Services.AddControllers();
-builder.Services.AddSession(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -48,7 +41,6 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
-app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

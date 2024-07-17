@@ -1,13 +1,16 @@
-import { ThemeIcon, Text, Group, Paper, ActionIcon } from '@mantine/core';
+import { Text, Group, Paper, ActionIcon } from '@mantine/core';
 import classes from './StatsCard.module.css';
 import React from 'react';
 
 interface StatsCardProps {
     icon: React.ReactNode;
     label: string;
+    monthlyCheckIns: number;
+    totalCheckIns: number;
+    currentStreak: number;
 }
 
-const StatsCard: React.FC<StatsCardProps> = ({ icon, label }) => {
+const StatsCard: React.FC<StatsCardProps> = ({ icon, label, monthlyCheckIns, totalCheckIns, currentStreak }) => {
     return (
         <Paper radius="md" withBorder className={classes.card} mt={20}>
             <Group justify="center" mt="xs">
@@ -25,7 +28,7 @@ const StatsCard: React.FC<StatsCardProps> = ({ icon, label }) => {
                     Current Streak
                 </Text>
                 <Text fz="sm" c="dimmed">
-                    0
+                    {currentStreak}
                 </Text>
             </Group>
             <Group justify="space-between" mt="xs">
@@ -33,7 +36,7 @@ const StatsCard: React.FC<StatsCardProps> = ({ icon, label }) => {
                     Monthly check-ins
                 </Text>
                 <Text fz="sm" c="dimmed">
-                    0
+                    {monthlyCheckIns}
                 </Text>
             </Group>
             <Group justify="space-between" mt="xs">
@@ -41,7 +44,7 @@ const StatsCard: React.FC<StatsCardProps> = ({ icon, label }) => {
                     Total check-ins
                 </Text>
                 <Text fz="sm" c="dimmed">
-                    0
+                    {totalCheckIns}
                 </Text>
             </Group>
         </Paper>

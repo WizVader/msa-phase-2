@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using msa_project.Server.Data;
-using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 
 namespace msa_project.Server.Controllers
@@ -16,13 +11,11 @@ namespace msa_project.Server.Controllers
     public class HabitsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _contextAccessor;
         private readonly ILogger<HabitsController> _logger;
 
-        public HabitsController(ApplicationDbContext context, IHttpContextAccessor contextAccessor, ILogger<HabitsController> logger)
+        public HabitsController(ApplicationDbContext context, ILogger<HabitsController> logger)
         {
             _context = context;
-            _contextAccessor = contextAccessor;
             _logger = logger;
         }
 
@@ -30,8 +23,8 @@ namespace msa_project.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Habit>>> GetHabits()
         {
-            var userEmail = _contextAccessor.HttpContext.Session.GetString("UserEmail");
-            _logger.LogInformation($"Retrieved Email from session: {userEmail}");
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            _logger.LogInformation($"Retrieved Email from claims: {userEmail}");
             if (userEmail == null)
             {
                 return Unauthorized();
@@ -63,8 +56,8 @@ namespace msa_project.Server.Controllers
                 return BadRequest();
             }
 
-            var userEmail = _contextAccessor.HttpContext.Session.GetString("UserEmail");
-            _logger.LogInformation($"Retrieved Email from session: {userEmail}");
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            _logger.LogInformation($"Retrieved Email from claims: {userEmail}");
             if (userEmail == null || habit.UserEmail != userEmail)
             {
                 return Unauthorized();
@@ -95,15 +88,14 @@ namespace msa_project.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Habit>> PostHabit(Habit habit)
         {
-            var userEmail = _contextAccessor.HttpContext.Session.GetString("UserEmail");
-            _logger.LogInformation($"Retrieved Email from session: {userEmail}");
-            if (userEmail == null)
+            // Ensure the UserEmail is provided
+            if (string.IsNullOrEmpty(habit.UserEmail))
             {
-                return Unauthorized();
+                return BadRequest(new { errors = new { UserEmail = new[] { "The UserEmail field is required." } } });
             }
 
-            // Set the UserEmail
-            habit.UserEmail = userEmail;
+            // Log the received habit data
+            _logger.LogInformation("Received Habit: " + Newtonsoft.Json.JsonConvert.SerializeObject(habit));
 
             // Set default values for the new habit
             habit.LastCheckInDate = DateTime.UtcNow;
@@ -111,14 +103,6 @@ namespace msa_project.Server.Controllers
             habit.MonthlyCheckIns = 0;
             habit.TotalCheckIns = 0;
             habit.CurrentStreak = 0;
-
-            // Clear ModelState errors for UserEmail
-            if (ModelState.ContainsKey("UserEmail"))
-            {
-                ModelState["UserEmail"].Errors.Clear();
-            }
-
-            _logger.LogInformation("ModelState is valid: " + ModelState.IsValid); // Log ModelState validity
 
             if (!ModelState.IsValid)
             {
@@ -142,8 +126,8 @@ namespace msa_project.Server.Controllers
                 return NotFound();
             }
 
-            var userEmail = _contextAccessor.HttpContext.Session.GetString("UserEmail");
-            _logger.LogInformation($"Retrieved Email from session: {userEmail}");
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            _logger.LogInformation($"Retrieved Email from claims: {userEmail}");
             if (userEmail == null || habit.UserEmail != userEmail)
             {
                 return Unauthorized();
@@ -165,15 +149,17 @@ namespace msa_project.Server.Controllers
                 return NotFound();
             }
 
-            var userEmail = _contextAccessor.HttpContext.Session.GetString("UserEmail");
-            _logger.LogInformation($"Retrieved Email from session: {userEmail}");
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            _logger.LogInformation($"Retrieved Email from claims: {userEmail}");
             if (userEmail == null || habit.UserEmail != userEmail)
             {
                 return Unauthorized();
             }
 
             var today = DateTime.UtcNow.Date;
-            if (habit.LastCheckInDate.Date != today)
+            Console.WriteLine(habit.LastCheckInDate.Date);
+            Console.WriteLine(today);
+            if (habit.LastCheckInDate.Date == today)
             {
                 habit.LastCheckInDate = today;
                 habit.IsCompletedToday = true;
@@ -189,11 +175,25 @@ namespace msa_project.Server.Controllers
                 {
                     habit.MonthlyCheckIns = 1;
                 }
+
+                await _context.SaveChangesAsync();
             }
 
-            await _context.SaveChangesAsync();
-            return Ok(habit);
+            return Ok(new
+            {
+                id = habit.Id,
+                label = habit.Label,
+                icon = habit.Icon,
+                isCompletedToday = habit.IsCompletedToday,
+                monthlyCheckIns = habit.MonthlyCheckIns,
+                totalCheckIns = habit.TotalCheckIns,
+                currentStreak = habit.CurrentStreak,
+                lastCheckInDate = habit.LastCheckInDate,
+                userEmail = habit.UserEmail
+            });
         }
+
+
 
         private bool HabitExists(int id)
         {
