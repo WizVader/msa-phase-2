@@ -157,10 +157,23 @@ namespace msa_project.Server.Controllers
             }
 
             var today = DateTime.UtcNow.Date;
-            Console.WriteLine(habit.LastCheckInDate.Date);
-            Console.WriteLine(today);
-            if (habit.LastCheckInDate.Date == today)
+
+            if (habit.LastCheckInDate.Date == today && habit.IsCompletedToday)
             {
+                // If already checked in today and is completed today, undo the check-in
+                habit.IsCompletedToday = false;
+                habit.TotalCheckIns--;
+                habit.CurrentStreak--;
+
+                // Update MonthlyCheckIns
+                if (today.Month == DateTime.UtcNow.Month)
+                {
+                    habit.MonthlyCheckIns--;
+                }
+            }
+            else
+            {
+                // Check in for today
                 habit.LastCheckInDate = today;
                 habit.IsCompletedToday = true;
                 habit.TotalCheckIns++;
@@ -175,9 +188,9 @@ namespace msa_project.Server.Controllers
                 {
                     habit.MonthlyCheckIns = 1;
                 }
-
-                await _context.SaveChangesAsync();
             }
+
+            await _context.SaveChangesAsync();
 
             return Ok(new
             {
@@ -192,6 +205,7 @@ namespace msa_project.Server.Controllers
                 userEmail = habit.UserEmail
             });
         }
+
 
 
 
