@@ -1,49 +1,48 @@
 .container {
     display: flex;
-    align-items: center;
     justify-content: center;
     width: 100%;
+    height: 100vh;
 }
 
 .row {
     display: flex;
-    flex-wrap: wrap;
-    height: 100%;
-    width: 100%;
-}
-
-.left, .right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10px;
-    text-align: center;
-    transition: all 0.3s ease;
+    width: 90%;
+    height: 90%;
+    gap: 20px; /* Add gap between columns */
 }
 
 .left {
-    align-items: flex-start;
-    flex: 3;
+    flex: 2; /* Reduce the size of the left section */
+    padding: 20px;
     background-color: var(--mantine-color-light-2);
 }
 
 .right {
-    align-items: flex-start;
-    flex: 2;
+    flex: 2; /* Increase the size of the right section */
+    padding: 20px;
     background-color: var(--mantine-color-light-3);
 }
 
 @media (max-width: 1024px) {
-    .left, .right {
-        flex: 1 1 100%;
+    .row {
+        flex-direction: column;
+        gap: 0; /* Remove gap for small screens */
     }
+
+    .left, .right {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.leftcontainer, .rightcontainer {
+    width: 100%;
 }
 
 .habitItem {
     display: flex;
     align-items: center;
-    width: 100%;
-    max-width: 400px;
     margin-bottom: 10px;
 }
 
@@ -58,7 +57,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: 10px; /* Space for delete icon */
+    padding-right: 10px;
 }
 
 .habitItem .mantine-ActionIcon-root {
@@ -70,7 +69,10 @@
 }
 
 .leftcontainer {
-    margin: 100px;
+    padding-top: calc(2.5rem * var(--mantine-scale));
+    max-width: calc(76.25rem * var(--mantine-scale));
+    margin-left: auto;
+    margin-right: auto;
 }
 
 @media (max-width: 600px) {
@@ -79,25 +81,10 @@
     }
 
     .checkbox {
-        max-width: calc(100% - 40px); /* Adjust to ensure space for delete icon */
+        max-width: calc(100% - 40px);
     }
 
     .habitItem .mantine-ActionIcon-root {
         margin-left: auto;
-    }
-
-
-    .leftcontainer {
-        padding-top: calc(2.5rem* var(--mantine-scale));
-        max-width: calc(76.25rem* var(--mantine-scale));
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    .rightcontainer {
-        padding-top: calc(2.5rem* var(--mantine-scale));
-        max-width: calc(76.25rem* var(--mantine-scale));
-        margin-left: auto;
-        margin-right: auto;
     }
 }

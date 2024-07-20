@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Checkbox, Group, Button, TextInput, Text, ActionIcon, Stack, Menu, Card } from '@mantine/core';
+import { Checkbox, Group, Button, TextInput, Text, ActionIcon, Stack, Menu, Card, Divider } from '@mantine/core';
 import { IconTrashFilled, IconRun, IconBookFilled, IconBedFilled, IconBarbellFilled, IconBallpenFilled } from '@tabler/icons-react';
 import classes from './HabitTrackingPage.module.css';
 import StatsCard from '../Components/StatsCard';
@@ -9,7 +9,7 @@ import axios from 'axios';
 interface CheckboxItem {
     id: number;
     label: string;
-    icon: string; // Change type to string to store icon name
+    icon: string;
     monthlyCheckIns: number;
     totalCheckIns: number;
     currentStreak: number;
@@ -27,13 +27,12 @@ const iconMap: { [key: string]: React.ReactNode } = {
 function HabitTrackingPage() {
     const [checkboxes, setCheckboxes] = useState<CheckboxItem[]>([]);
     const [label, setLabel] = useState<string>('');
-    const [selectedIcon, setSelectedIcon] = useState<string>('study'); // Change to string to store icon name
+    const [selectedIcon, setSelectedIcon] = useState<string>('study');
     const [selectedHabit, setSelectedHabit] = useState<CheckboxItem | null>(null);
     const [userEmail, setUserEmail] = useState<string | null>(null);
     const [isEmailFetched, setIsEmailFetched] = useState<boolean>(false);
 
     useEffect(() => {
-        // Fetch the user's email and habits from the backend
         const fetchUserData = async () => {
             try {
                 const response = await axios.get('/pingauth');
@@ -67,7 +66,7 @@ function HabitTrackingPage() {
         if (label.trim() && userEmail) {
             const newHabit = {
                 label: label.trim(),
-                icon: selectedIcon, // Use selectedIcon directly
+                icon: selectedIcon,
                 userEmail: userEmail
             };
 
@@ -137,6 +136,7 @@ function HabitTrackingPage() {
                                 <h1>
                                     <Text size="xl">Habit Tracking</Text>
                                 </h1>
+                                <Text size="sm">Track your habits here</Text>
                             </div>
                             <div>
                                 <TextInput
@@ -145,7 +145,7 @@ function HabitTrackingPage() {
                                     placeholder="Enter habit name"
                                     label="New Habit"
                                     maxLength={20}
-                                    disabled={!isEmailFetched} // Disable input until email is fetched
+                                    disabled={!isEmailFetched}
                                 />
                                 <Menu>
                                     <Menu.Target>
@@ -189,8 +189,13 @@ function HabitTrackingPage() {
                             </Stack>
                         </div>
                     </div>
+                    <Divider orientation="vertical" />
                     <div className={classes.right}>
                         <div className={classes.rightcontainer}>
+                            <div>
+                                <Text size="xl">Habit Stats</Text>
+                                <Text size="sm">View your stats for each habit here</Text>
+                            </div>
                             {selectedHabit && (
                                 <StatsCard
                                     icon={<ActionIcon size="md">{iconMap[selectedHabit.icon]}</ActionIcon>}
