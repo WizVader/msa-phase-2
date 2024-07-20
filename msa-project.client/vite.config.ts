@@ -1,7 +1,6 @@
 import { fileURLToPath, URL } from 'node:url';
-
 import { defineConfig } from 'vite';
-import plugin from '@vitejs/plugin-react';
+import react from '@vitejs/plugin-react';
 import fs from 'fs';
 import path from 'path';
 import child_process from 'child_process';
@@ -25,7 +24,7 @@ if (!fs.existsSync(certFilePath) || !fs.existsSync(keyFilePath)) {
         '--format',
         'Pem',
         '--no-password',
-    ], { stdio: 'inherit', }).status) {
+    ], { stdio: 'inherit' }).status) {
         throw new Error("Could not create certificate.");
     }
 }
@@ -35,7 +34,7 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [plugin()],
+    plugins: [react()],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))
@@ -44,23 +43,32 @@ export default defineConfig({
     server: {
         proxy: {
             '^/weatherforecast': {
-                target: 'https://localhost:7093/',
+                target: target,
                 secure: false
             },
             '^/pingauth': {
-                target: 'https://localhost:7093/',
+                target: target,
                 secure: false
             },
             '^/register': {
-                target: 'https://localhost:7093/',
+                target: target,
                 secure: false
             },
             '^/login': {
-                target: 'https://localhost:7093/',
+                target: target,
                 secure: false
             },
             '^/logout': {
-                target: 'https://localhost:7093/',
+                target: target,
+                secure: false
+            },
+            // Add proxy rules for habits API
+            '^/api/habits': {
+                target: target,
+                secure: false
+            },
+            '^/api/habits/\\d+/checkin': { // For check-in endpoint
+                target: target,
                 secure: false
             }
         },
@@ -70,4 +78,4 @@ export default defineConfig({
             cert: fs.readFileSync(certFilePath),
         }
     }
-})
+});
