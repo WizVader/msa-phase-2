@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, TextInput, Button, Stack, Card, Group, ActionIcon } from '@mantine/core';
+import { Text, TextInput, Button, Stack, Card, Group, ActionIcon, Divider } from '@mantine/core';
 import { IconTrashFilled } from '@tabler/icons-react';
 import { useEditor } from '@tiptap/react';
 import { Link } from '@tiptap/extension-link';
@@ -68,6 +68,7 @@ function TaskPage() {
                                 <h1>
                                     <Text size="xl">Tasks</Text>
                                 </h1>
+                                <Text size="sm">Manage your tasks here</Text>
                             </div>
                             <div>
                                 <TextInput
@@ -95,8 +96,13 @@ function TaskPage() {
                             </Stack>
                         </div>
                     </div>
+                    <Divider orientation="vertical" />
                     <div className={classes.right}>
                         <div className={classes.rightContainer}>
+                            <div>
+                                <Text size="xl">Task Editor</Text>
+                                <Text size="sm">Edit your selected task here</Text>
+                            </div>
                             {selectedTask && <TasksRichTextEditor editor={editor} />}
                         </div>
                     </div>
