@@ -44,6 +44,7 @@
 
 .leftContainer, .rightContainer {
     width: 100%;
+    padding: 20px;
 }
 
 .task {
@@ -61,10 +62,6 @@
 }
 
 @media (max-width: 600px) {
-    .task {
-        max-width: 100%;
-    }
-
     .task {
         max-width: calc(100% - 40px);
     }
