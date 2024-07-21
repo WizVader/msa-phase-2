@@ -12,6 +12,8 @@ namespace msa_project.Server.Data
 
         public DbSet<Habit> Habits { get; set; }
 
+        public DbSet<Task> Tasks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

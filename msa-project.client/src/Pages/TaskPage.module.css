@@ -1,53 +1,75 @@
 .container {
     display: flex;
-    align-items: center;
     justify-content: center;
     width: 100%;
+    height: 100vh;
 }
 
 .row {
     display: flex;
-    flex-wrap: wrap;
-    height: 100%;
-    width: 100%;
-}
-
-.left, .right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10px;
-    align-items: center;
-    text-align: center;
-    transition: all 0.3s ease;
+    width: 90%;
+    height: 90%;
+    gap: 20px; /* Add gap between columns */
 }
 
 .left {
-    flex: 3;
+    flex: 2; /* Adjust the size of the left section */
+    padding: 20px;
     background-color: var(--mantine-color-light-2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items to the top */
 }
 
 .right {
-    flex: 2;
+    flex: 2; /* Adjust the size of the right section */
+    padding: 20px;
     background-color: var(--mantine-color-light-3);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items to the top */
 }
 
-.button {
-    margin-top: 10px;
+@media (max-width: 1024px) {
+    .row {
+        flex-direction: column;
+        gap: 0; /* Remove gap for small screens */
+    }
+
+    .left, .right {
+        width: 100%;
+        height: auto;
+    }
 }
 
-.tasklabel {
+.leftContainer, .rightContainer {
+    width: 100%;
+}
+
+.task {
     flex-grow: 1;
     display: flex;
     align-items: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: 10px; /* Space for delete icon */
+    padding-right: 10px;
 }
 
-@media (max-width: 1024px) {
-    .left, .right {
-        flex: 1 1 100%;
+.button {
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    .task {
+        max-width: 100%;
     }
+
+    .task {
+        max-width: calc(100% - 40px);
+    }
+
+        .task .mantine-ActionIcon-root {
+            margin-left: auto;
+        }
 }
