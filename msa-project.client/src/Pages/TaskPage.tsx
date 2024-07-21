@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Text, TextInput, Button, Stack, Card, Group, ActionIcon, Divider } from '@mantine/core';
 import { IconTrashFilled } from '@tabler/icons-react';
 import { useEditor } from '@tiptap/react';
@@ -12,16 +12,48 @@ import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
 import classes from './TaskPage.module.css';
 import AuthorizeView from '../Components/AuthorizeView';
+import axios from 'axios';
 
 interface TaskItem {
     id: number;
     label: string;
+    content: string;
 }
 
 function TaskPage() {
     const [tasks, setTasks] = useState<TaskItem[]>([]);
     const [label, setLabel] = useState<string>('');
     const [selectedTask, setSelectedTask] = useState<TaskItem | null>(null);
+    const [userEmail, setUserEmail] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get('/pingauth');
+                if (response.data && response.data.email) {
+                    setUserEmail(response.data.email);
+
+                    const tasksResponse = await axios.get('/api/Tasks');
+                    console.log('Tasks Response:', tasksResponse.data);
+                    if (Array.isArray(tasksResponse.data)) {
+                        const tasks = tasksResponse.data.map((task: any) => ({
+                            id: task.id,
+                            label: task.label,
+                            content: task.content,
+                        }));
+                        setTasks(tasks);
+                    } else {
+                        console.error('Tasks response data is not an array');
+                    }
+                } else {
+                    console.error('No email found in response data');
+                }
+            } catch (error) {
+                console.error('Error fetching user data', error);
+            }
+        };
+        fetchUserData();
+    }, []);
 
     const editor = useEditor({
         extensions: [
@@ -36,27 +68,56 @@ function TaskPage() {
         content: '',
     });
 
-    const addTask = () => {
+    const addTask = async () => {
         if (label.trim()) {
-            setTasks([...tasks, { label, id: Date.now() }]);
-            setLabel('');
+            const newTask = { label, content: '', userEmail };
+            try {
+                const response = await axios.post('/api/Tasks', newTask);
+                setTasks([...tasks, response.data]);
+                setLabel('');
+            } catch (error) {
+                console.error('Error adding task', error);
+            }
         }
     };
 
-    const deleteTask = (id: number) => {
-        setTasks(tasks.filter((task) => task.id !== id));
-        if (selectedTask?.id === id) {
-            setSelectedTask(null);
+    const deleteTask = async (id: number) => {
+        try {
+            await axios.delete(`/api/Tasks/${id}`);
+            setTasks(tasks.filter((task) => task.id !== id));
+            if (selectedTask?.id === id) {
+                setSelectedTask(null);
+            }
+        } catch (error) {
+            console.error('Error deleting task', error);
         }
-    }
+    };
 
     const handleTaskClick = (task: TaskItem) => {
         setSelectedTask(task);
         if (editor) {
-            const content = `<h2 style="text-align: center;">${task.label}</h2>`;
-            editor.commands.setContent(content);
+            editor.commands.setContent(task.content);
         }
-    }
+    };
+
+    const saveTaskContent = async () => {
+        if (selectedTask && editor) {
+            const updatedContent = editor.getHTML();
+            const updatedTasks = tasks.map((task) =>
+                task.id === selectedTask.id ? { ...task, content: updatedContent } : task
+            );
+            setTasks(updatedTasks);
+
+            try {
+                await axios.put(`/api/Tasks/${selectedTask.id}`, {
+                    ...selectedTask,
+                    content: updatedContent,
+                });
+            } catch (error) {
+                console.error('Error saving task content', error);
+            }
+        }
+    };
 
     return (
         <AuthorizeView>
@@ -103,7 +164,12 @@ function TaskPage() {
                                 <Text size="xl">Task Editor</Text>
                                 <Text size="sm">Edit your selected task here</Text>
                             </div>
-                            {selectedTask && <TasksRichTextEditor editor={editor} />}
+                            {selectedTask && (
+                                <>
+                                    <TasksRichTextEditor editor={editor} />
+                                    <Button onClick={saveTaskContent} className={classes.button} color="blue" mt="md">Save Content</Button>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

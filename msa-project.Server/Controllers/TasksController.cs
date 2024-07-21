@@ -33,7 +33,8 @@ namespace msa_project.Server.Controllers
             {
                 return Unauthorized();
             }
-            return await _context.Tasks.Where(t => t.UserEmail == userEmail).ToListAsync();
+            var tasks = await _context.Tasks.Where(t => t.UserEmail == userEmail).ToListAsync();
+            return Ok(tasks); // Ensure that you are returning the tasks as an array
         }
 
         // GET: api/Tasks/5

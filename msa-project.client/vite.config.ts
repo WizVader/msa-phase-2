@@ -62,7 +62,10 @@ export default defineConfig({
                 target: target,
                 secure: false
             },
-            // Add proxy rules for habits API
+            '^/api/Tasks': {
+                target: target,
+                secure: false
+            },
             '^/api/habits': {
                 target: target,
                 secure: false
