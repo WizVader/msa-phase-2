@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 import { Text, TextInput, Button, Stack, Card, Group, ActionIcon, Divider } from '@mantine/core';
 import { IconTrashFilled } from '@tabler/icons-react';
 import { useEditor } from '@tiptap/react';
-import { Link } from '@tiptap/extension-link';
 import TasksRichTextEditor from '../Components/TasksRichTextEditor';
+import { Link, getTaskListExtension } from '@mantine/tiptap';
 import Highlight from '@tiptap/extension-highlight';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import TextAlign from '@tiptap/extension-text-align';
 import Superscript from '@tiptap/extension-superscript';
 import SubScript from '@tiptap/extension-subscript';
+import Placeholder from '@tiptap/extension-placeholder';
+import TaskItem from '@tiptap/extension-task-item';
+import TaskList from '@tiptap/extension-task-list';
 import classes from './TaskPage.module.css';
 import AuthorizeView from '../Components/AuthorizeView';
 import axios from 'axios';
@@ -64,13 +67,38 @@ function TaskPage() {
             SubScript,
             Highlight,
             TextAlign.configure({ types: ['heading', 'paragraph'] }),
+            Placeholder.configure({ placeholder: 'Start typing your task content here...' }),
+            getTaskListExtension(TaskList),
+            TaskItem.configure({ nested: true }),
         ],
         content: '',
     });
 
     const addTask = async () => {
         if (label.trim()) {
-            const newTask = { label, content: '', userEmail };
+            const newTask = {
+                label,
+                content: `
+                    <h2 style="text-align: center;">Welcome to Mantine rich text editor</h2>
+                    <p>
+                        <code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on
+                        <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:
+                    </p>
+                    <ul>
+                        <li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s></li>
+                        <li>Headings (h1-h6)</li>
+                        <li>Sub and super scripts (<sup>&lt;sup /&gt;</sup> and <sub>&lt;sub /&gt;</sub>)</li>
+                        <li>Ordered and bullet lists</li>
+                        <li>Text align</li>
+                        <li>And all other <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">extensions</a></li>
+                    </ul>
+                    <ul data-type="taskList">
+                        <li data-type="taskItem" data-checked="true">A list item</li>
+                        <li data-type="taskItem" data-checked="false">And another one</li>
+                    </ul>
+                `,
+                userEmail,
+            };
             try {
                 const response = await axios.post('/api/Tasks', newTask);
                 setTasks([...tasks, response.data]);
