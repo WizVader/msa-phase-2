@@ -79,7 +79,7 @@ function TaskPage() {
             const newTask = {
                 label,
                 content: `
-                    <h2 style="text-align: center;">Welcome to Mantine rich text editor</h2>
+                    <h2 style="text-align: center;">Insert Task Name here</h2>
                     <p>
                         <code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on
                         <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:
