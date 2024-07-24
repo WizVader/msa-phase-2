@@ -5,10 +5,7 @@ interface TextEditorProps {
     editor: Editor | null;
 }
 
-
-
 function TasksRichTextEditor({ editor }: TextEditorProps) {
-
     return (
         <RichTextEditor editor={editor}>
             <RichTextEditor.Toolbar sticky stickyOffset={60}>
@@ -53,6 +50,12 @@ function TasksRichTextEditor({ editor }: TextEditorProps) {
                 <RichTextEditor.ControlsGroup>
                     <RichTextEditor.Undo />
                     <RichTextEditor.Redo />
+                </RichTextEditor.ControlsGroup>
+
+                <RichTextEditor.ControlsGroup>
+                    <RichTextEditor.TaskList />
+                    <RichTextEditor.TaskListLift />
+                    <RichTextEditor.TaskListSink />
                 </RichTextEditor.ControlsGroup>
             </RichTextEditor.Toolbar>
 

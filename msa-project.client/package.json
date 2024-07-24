@@ -28,6 +28,7 @@
     "@tabler/icons-react": "^3.7.0",
     "@tiptap/extension-highlight": "^2.4.0",
     "@tiptap/extension-link": "^2.4.0",
+    "@tiptap/extension-placeholder": "^2.5.4",
     "@tiptap/extension-subscript": "^2.4.0",
     "@tiptap/extension-superscript": "^2.4.0",
     "@tiptap/extension-task-item": "^2.5.4",
