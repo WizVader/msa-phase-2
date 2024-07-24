@@ -85,6 +85,13 @@ The task management feature utilizes Mantine's RichTextEditor integrated with Ti
 - **Add Habit**: `POST /api/habits`
 - **Check In Habit**: `PUT /api/habits/checkinhabit/{id}`
 
+### Tasks
+
+- **Get Tasks**: `GET /api/tasks`
+- **Add Task**: `POST /api/tasks`
+- **Update Task**: `PUT /api/tasks/{id}`
+- **Delete Task**: `DELETE /api/tasks/{id}`
+
 ## Contribution
 
 Contributions are welcome! Please fork the repository and create a pull request. For major changes, please open an issue first to discuss what you would like to change.
@@ -93,6 +100,6 @@ Contributions are welcome! Please fork the repository and create a pull request.
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Contact
+## Author
 
-- **Author**: Charanjeet Santhanam Viswanathan
+- Charanjeet Santhanam Viswanathan
