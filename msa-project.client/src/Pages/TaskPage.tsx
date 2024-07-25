@@ -93,8 +93,7 @@ function TaskPage() {
                         <li>And all other <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">extensions</a></li>
                     </ul>
                     <ul data-type="taskList">
-                        <li data-type="taskItem" data-checked="true">A list item</li>
-                        <li data-type="taskItem" data-checked="false">And another one</li>
+                        <li data-type="taskItem" data-checked="false">Exammple fix</li>
                     </ul>
                 `,
                 userEmail,
