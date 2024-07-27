@@ -14,6 +14,7 @@ interface CheckboxItem {
     totalCheckIns: number;
     currentStreak: number;
     isCompletedToday: boolean;
+    lastCheckInDate: string;
 }
 
 const iconMap: { [key: string]: React.ReactNode } = {
@@ -41,6 +42,7 @@ function HabitTrackingPage() {
                     setIsEmailFetched(true);
 
                     const habitsResponse = await axios.get('/api/habits');
+                    const today = new Date().toISOString().split('T')[0];
                     const habits = habitsResponse.data.map((habit: any) => ({
                         id: habit.id,
                         label: habit.label,
@@ -48,7 +50,8 @@ function HabitTrackingPage() {
                         monthlyCheckIns: habit.monthlyCheckIns,
                         totalCheckIns: habit.totalCheckIns,
                         currentStreak: habit.currentStreak,
-                        isCompletedToday: habit.isCompletedToday,
+                        isCompletedToday: habit.lastCheckInDate.split('T')[0] === today ? habit.isCompletedToday : false,
+                        lastCheckInDate: habit.lastCheckInDate,
                     }));
                     setCheckboxes(habits);
                 } else {
@@ -72,7 +75,7 @@ function HabitTrackingPage() {
 
             try {
                 const response = await axios.post('/api/habits', newHabit);
-                setCheckboxes([...checkboxes, { id: response.data.id, label, icon: selectedIcon, monthlyCheckIns: 0, totalCheckIns: 0, currentStreak: 0, isCompletedToday: false }]);
+                setCheckboxes([...checkboxes, { id: response.data.id, label, icon: selectedIcon, monthlyCheckIns: 0, totalCheckIns: 0, currentStreak: 0, isCompletedToday: false, lastCheckInDate: '' }]);
                 setLabel('');
             } catch (error) {
                 console.error('Failed to add habit', error);
@@ -109,6 +112,9 @@ function HabitTrackingPage() {
                     lastCheckInDate: updatedHabit.lastCheckInDate
                 } : checkbox
             ));
+            if (selectedHabit && selectedHabit.id === habit.id) {
+                setSelectedHabit(updatedHabit);
+            }
         } catch (error) {
             console.error('Failed to check in habit', error);
         }

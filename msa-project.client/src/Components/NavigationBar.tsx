@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Center, Tooltip, UnstyledButton, Stack, rem } from '@mantine/core';
 import {
     IconClockFilled,
     IconTimeline,
     IconSquareCheckFilled,
-    IconSettings,
     IconLogout,
 } from '@tabler/icons-react';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './NavigationBar.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import LogoutLink from './LogoutLink';
+import ThemeSwitcher from './ThemeSwitcher'; // Import ThemeSwitcher
 
 interface NavbarLinkProps {
     icon: typeof IconClockFilled;
@@ -66,7 +66,7 @@ function NavigationBar() {
                 </Stack>
             </div>
             <Stack justify="center" gap={0}>
-                <NavbarLink icon={IconSettings} label="Settings" path="/settings" active={location.pathname === '/settings'} />
+                <ThemeSwitcher />
                 <LogoutLink>
                     <NavbarLink icon={IconLogout} label="Logout" path="/logout" active={location.pathname === '/logout'} />
                 </LogoutLink>
