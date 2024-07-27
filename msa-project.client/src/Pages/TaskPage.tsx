@@ -139,6 +139,7 @@ function TaskPage() {
                 await axios.put(`/api/Tasks/${selectedTask.id}`, {
                     ...selectedTask,
                     content: updatedContent,
+                    userEmail: userEmail
                 });
             } catch (error) {
                 console.error('Error saving task content', error);
