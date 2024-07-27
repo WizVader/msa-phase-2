@@ -50,6 +50,7 @@ const Timer: React.FC = () => {
             interval = setInterval(() => {
                 if (seconds === 0) {
                     if (minutes === 0) {
+                        playNotificationSound(); // Play sound when the session or break ends
                         if (isBreak) {
                             setIsBreak(false);
                             setMinutes(sessionTime);
@@ -63,6 +64,7 @@ const Timer: React.FC = () => {
                         } else {
                             setIsBreak(true);
                             setMinutes(breakTime);
+                            setInitialTime(breakTime * 60); // Update initial time when starting a new break
                             setBreakPhrase(getRandomPhrase(breakPhrases));
                         }
                         setSeconds(0);
@@ -109,6 +111,11 @@ const Timer: React.FC = () => {
         return (totalTimePassed / initialTime) * 100;
     };
 
+    const playNotificationSound = () => {
+        const audio = new Audio('/notification.mp3');
+        audio.play();
+    };
+
     const timerMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const timerSeconds = seconds < 10 ? `0${seconds}` : seconds;
 
@@ -140,6 +147,7 @@ const Timer: React.FC = () => {
                                 setSessionTime(time);
                                 setMinutes(time);
                                 setInitialTime(time * 60);
+                                setProgressValue(0);
                             }
                         }}
                     />
@@ -153,6 +161,8 @@ const Timer: React.FC = () => {
                                 setBreakTime(time);
                                 if (isBreak) {
                                     setMinutes(time);
+                                    setInitialTime(time * 60);
+                                    setProgressValue(0);
                                 }
                             }
                         }}
