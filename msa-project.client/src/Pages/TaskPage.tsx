@@ -79,10 +79,9 @@ function TaskPage() {
             const newTask = {
                 label,
                 content: `
-                    <h2 style="text-align: center;">Insert Task Name here</h2>
+                    <h2 style="text-align: center;">${label}</h2>
                     <p>
-                        <code>RichTextEditor</code> component focuses on usability and is designed to be as simple as possible to bring a familiar editing experience to regular users. <code>RichTextEditor</code> is based on
-                        <a href="https://tiptap.dev/" rel="noopener noreferrer" target="_blank">Tiptap.dev</a> and supports all of its features:
+                        Welcome to your task management. You can manage your tasks, add a to-do list, use bullet points, and include hyperlinks to stay organized.
                     </p>
                     <ul>
                         <li>General text formatting: <strong>bold</strong>, <em>italic</em>, <u>underline</u>, <s>strike-through</s></li>
@@ -93,7 +92,8 @@ function TaskPage() {
                         <li>And all other <a href="https://tiptap.dev/extensions" target="_blank" rel="noopener noreferrer">extensions</a></li>
                     </ul>
                     <ul data-type="taskList">
-                        <li data-type="taskItem" data-checked="false">Exammple fix</li>
+                        <li data-type="taskItem" data-checked="false">Add your first to-do item here</li>
+                        <li data-type="taskItem" data-checked="false">Mark items as complete by checking the box</li>
                     </ul>
                 `,
                 userEmail,
@@ -172,7 +172,7 @@ function TaskPage() {
                             <Stack mt="lg">
                                 {tasks.map((task) => (
                                     <div key={task.id} onClick={() => handleTaskClick(task)}>
-                                        <Card>
+                                        <Card shadow="lg">
                                             <Group>
                                                 <div className={classes.task}>{task.label}</div>
                                                 <ActionIcon onClick={(e) => { e.stopPropagation(); deleteTask(task.id) }} color="red" size="md">

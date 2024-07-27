@@ -173,7 +173,7 @@ function HabitTrackingPage() {
                             <Stack mt="lg">
                                 {checkboxes.map((checkbox) => (
                                     <div key={checkbox.id} onClick={() => handleHabitClick(checkbox)}>
-                                        <Card>
+                                        <Card shadow="lg">
                                             <Group className={classes.habitItem}>
                                                 <div className={classes.icon}>
                                                     <ActionIcon size="md">{iconMap[checkbox.icon]}</ActionIcon>
